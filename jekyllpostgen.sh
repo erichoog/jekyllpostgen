@@ -65,7 +65,7 @@ title="$1"
 # echo part replaces spaces with '-'
 # awk converts it to lowercase
 # sed keeps only lowercase letters and '-'
-filetitle=$( echo ${1// /-} | awk '{print tolower($0)}'| sed 's/[^a-z\-]*//g')
+filetitle=$( echo ${1// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
 
 # name of file
 filename="${folder}`date +%F`-$filetitle.md"
