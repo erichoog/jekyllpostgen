@@ -108,14 +108,14 @@ else
     title="$1"
 fi
 
-set_filename $title
+set_filename "$title"
 
 date=$(date +"$default_date_format_in_post")
 
 ########## Adding to file ##########
 echo "---" >> $filename
 echo "layout: ${layout}" >> $filename
-echo "title: \"$title\"" >> $filename
+echo "title: \"${title}\"" >> $filename
 
 if [[ "$is_basic_mode" = false ]]; then
 
