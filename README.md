@@ -9,7 +9,7 @@ Credit / Inspired by:
 
 The filename will always output in this format: `YYYY-MM-DD-your-file-title.md`
 
-In the config file, the editor is set to `cat` by default so the file contents will be opened with that program at the end.
+In the config function at the top of the script, the editor is set to `cat` by default so the file contents will be opened with that program at the end.
 
 ## Basic:
 
