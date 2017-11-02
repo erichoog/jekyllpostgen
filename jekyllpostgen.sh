@@ -27,25 +27,22 @@
 # categories: EN
 # ---
 
-########## Configs ##########
+function config {
+    # Post layout
+    layout="post"
 
-# Post layout
-layout="post"
+    # Post text editor
+    editor="cat"
 
-# Post text editor
-editor="cat"
+    # Post directory
+    folder="_posts/"
 
-# Post directory
-folder="_posts/"
+    # Default date format in posts
+    default_date_format_in_post='%F %T %z'
 
-# Default date formate in posts
-default_date_format_in_post='%F %T %z'
-
-# Default category (space separated values)
-default_category="EN"
-
-
-########## Program ##########
+    # Default category (space separated values)
+    default_category="EN"
+}
 
 function show_help {
     echo ""
@@ -56,15 +53,26 @@ function show_help {
     exit 0
 }
 
+function do_interactive_mode {
+    read -p "Enter Title: " title
+    read -p "Enter Href (link): " href
+    read -p "Enter Tags (comma separated): " tags
+    read -p "Enter Categories (space separated): " categories
+}
+
+function set_filename {
+    # convert title to jekyll post filename format 
+    # echo part replaces spaces with '-', awk converts it to lowercase
+    # sed keeps only lowercase letters and '-' and 0-9 digits
+    filetitle=$( echo ${1// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
+
+    filename="${folder}`date +%F`-$filetitle.md"
+}
+
+config
+
 is_interactive=false
 is_basic_mode=false
-
-do_interactive_mode() {
-  read -p "Enter Title: " title
-  read -p "Enter Href (link): " href
-  read -p "Enter Tags (comma separated): " tags
-  read -p "Enter Categories (space separated): " categories
-}
 
 # show help with -h or --help, set interactive mode with -i, no params show help, no second params basic mode
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -75,42 +83,31 @@ elif [ -z "$1" ]; then
   show_help $0
 elif [[ -z "$2" && "$is_interactive" = false ]]; then
   is_basic_mode=true
-else
-  is_interactive=false
-  is_basic_mode=false
 fi
 
 # if is_interactive is false an received a "-" in first param, show help
 if [[ ${1:0:1} == "-" && "$is_interactive" = false ]]; then
-  show_help $0
+    show_help $0
 fi
 
 
 ##### Variables #####
 if [[ "$is_interactive" = true ]]; then
-  do_interactive_mode
+    do_interactive_mode
+elif [[ "$is_interactive" = false && "$is_basic_mode" = false ]]; then
+    OPTIND=2
+    while getopts "l:t:c:" option; do
+        case "${option}" in
+            t) tags=${OPTARG};;
+            l) href=${OPTARG};;
+            c) categories=${OPTARG};;
+        esac
+    done
 else
-  title="$1"
+    title="$1"
 fi
 
-OPTIND=2
-while getopts "l:t:c:" option; do
- case "${option}" in
-  t) tags=${OPTARG};;
-  l) href=${OPTARG};;
-  c) categories=${OPTARG};;
- esac
-done
-
-
-# convert title to filename format
-# echo part replaces spaces with '-'
-# awk converts it to lowercase
-# sed keeps only lowercase letters and '-' and 0-9 digits
-filetitle=$( echo ${title// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
-
-# name of file
-filename="${folder}`date +%F`-$filetitle.md"
+set_filename $title
 echo $filename
 
 date=$(date +"$default_date_format_in_post")
