@@ -103,12 +103,12 @@ elif [[ "$is_interactive" = false && "$is_basic_mode" = false ]]; then
             c) categories=${OPTARG};;
         esac
     done
+    title="$1"
 else
     title="$1"
 fi
 
 set_filename $title
-echo $filename
 
 date=$(date +"$default_date_format_in_post")
 
@@ -143,6 +143,8 @@ fi
 
 echo "---" >> $filename
 echo >> $filename
+
+echo "Your new filename is: " $filename
 
 # open in chosen editor
 ${editor} $filename
