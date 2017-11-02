@@ -63,3 +63,5 @@ tags: [tag1, tag with space, tag3]
 categories: DE
 ---
 ```
+
+> NOTE: for -t and -c options you can use double quotes for multiple options or ommit them for one.
