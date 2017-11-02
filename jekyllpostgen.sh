@@ -47,25 +47,67 @@ default_category="EN"
 
 ########## Program ##########
 
-# show help with -h
-if [ "$1" == "-h" ]; then
-  echo "Usage: `basename $0` \"Post title\""
-  exit 0
+function show_help {
+    echo ""
+    echo "Usage: `basename $1` \"Post title\""
+    echo ""
+    echo "For interactive mode use: `basename $1` -i"
+    echo ""
+    exit 0
+}
+
+is_interactive=false
+is_basic_mode=false
+
+do_interactive_mode() {
+  read -p "Enter Title: " title
+  read -p "Enter Href (link): " href
+  read -p "Enter Tags (comma separated): " tags
+  read -p "Enter Categories (space separated): " categories
+}
+
+# show help with -h or --help, set interactive mode with -i, no params show help, no second params basic mode
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  show_help $0
+elif [[ "$1" == "-i" ]]; then
+  is_interactive=true
 elif [ -z "$1" ]; then
-  echo "Usage: `basename $0` \"Post title\""
-  exit 0
+  show_help $0
+elif [[ -z "$2" && "$is_interactive" = false ]]; then
+  is_basic_mode=true
+else
+  is_interactive=false
+  is_basic_mode=false
 fi
 
-##### Variables #####
+# if is_interactive is false an received a "-" in first param, show help
+if [[ ${1:0:1} == "-" && "$is_interactive" = false ]]; then
+  show_help $0
+fi
 
-# post title
-title="$1"
+
+##### Variables #####
+if [[ "$is_interactive" = true ]]; then
+  do_interactive_mode
+else
+  title="$1"
+fi
+
+OPTIND=2
+while getopts "l:t:c:" option; do
+ case "${option}" in
+  t) tags=${OPTARG};;
+  l) href=${OPTARG};;
+  c) categories=${OPTARG};;
+ esac
+done
+
 
 # convert title to filename format
 # echo part replaces spaces with '-'
 # awk converts it to lowercase
-# sed keeps only lowercase letters and '-'
-filetitle=$( echo ${1// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
+# sed keeps only lowercase letters and '-' and 0-9 digits
+filetitle=$( echo ${title// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
 
 # name of file
 filename="${folder}`date +%F`-$filetitle.md"
@@ -78,21 +120,29 @@ echo "---" >> $filename
 echo "layout: ${layout}" >> $filename
 echo "title: \"$title\"" >> $filename
 
-### Adding href to file
-read -p "Href: " href
-if [ "$href" ]; then
-  echo "href: $href" >> $filename
+if [[ "$is_basic_mode" = false ]]; then
+
+  ### Adding href to file
+  if [ "$href" ]; then
+    echo "href: $href" >> $filename
+  fi
+
+  ### Adding date to file
+  echo "date: $date" >> $filename
+
+  ### Adding tags
+  if [ "$tags" ]; then
+    echo "tags: [$tags]" >> $filename
+  fi
+
+  ### Adding categories
+  if [ "$categories" ]; then
+    echo "categories: $categories" >> $filename
+  else
+    echo "categories: ${default_category}" >> $filename
+  fi
+
 fi
-
-echo "date: $date" >> $filename
-
-### Adding tags
-read -p "Tags: " tags
-if [ "$tags" ]; then
-  echo "tags: [$tags]" >> $filename
-fi
-
-echo "categories: ${default_category}" >> $filename
 
 echo "---" >> $filename
 echo >> $filename
