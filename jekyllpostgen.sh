@@ -35,7 +35,7 @@ function config {
     editor="cat"
 
     # Post directory
-    folder="_posts/"
+    folder="./"
 
     # Default date format in posts
     default_date_format_in_post='%F %T %z'
