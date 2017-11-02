@@ -1,3 +1,2 @@
 #! /bin/bash
-
-test/*.sh
+./test/tests.sh
