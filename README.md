@@ -28,9 +28,9 @@ title: "Your File Title"
 
 `./jekyllpostgen.sh -i`
 
-This will read in Href, Tags, and Categories one by one:
+This will read in Title, Href, Tags, and Categories one by one:
 ```
-Enter Title: Your File Title
+Enter Title: "Your File Title"
 Enter Href (link): https://test.com
 Enter Tags (comma separated): test1, test with space, test2
 Enter Categories (space separated): DE
