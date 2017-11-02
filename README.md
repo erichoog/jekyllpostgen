@@ -1,9 +1,9 @@
 # jekyllpostgen
 A Jekyll Post Generator for BASH
 
-Credit / Inspired by: 
-- [Jekyll Post Creator](http://www.marcusoft.net/2014/12/my-post-scaffolder-for-jekyll.html)
-- [jekyll-posts-generator](https://github.com/ismnoiet/jekyll-posts-generator)
+[![Build Status](https://travis-ci.org/erichoog/jekyllpostgen.svg?branch=master)](https://travis-ci.org/erichoog/jekyllpostgen)
+
+
 
 # Usage
 
@@ -91,3 +91,8 @@ tags:
 ```
 
 Set the `tag_format_is_brackets` option to `false`:  `tag_format_is_brackets=false`
+
+
+Credit / Inspired by: 
+- [Jekyll Post Creator](http://www.marcusoft.net/2014/12/my-post-scaffolder-for-jekyll.html)
+- [jekyll-posts-generator](https://github.com/ismnoiet/jekyll-posts-generator)
