@@ -1,9 +1,12 @@
 #!/bin/bash
 
-#---------/---------------------\---------#
-#--------|- Jekyll Post Creator -|--------#
-#---------\---------------------/---------#
-# Ripped and tweaked from https://gist.github.com/kabrooski/6107707
+#--------jekyllpostgen--------#
+#
+# Source and tweaked from:
+#   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
+#   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
+#
+#-----------------------------#
 
 # Simply put the script in your site directory, edit the configs to fit your setup, and run it with:
 # ./post "post title"
@@ -20,13 +23,16 @@
 layout=post
 
 # Post text editor
-editor=sublime
+editor=cat
 
 # Post directory
 folder=_posts/
 
+date_format='date +%F" "%T" "%z'
+date=$(date_format)
+
 # Author
-author="Marcus Hammarberg"
+#author="Marcus Hammarberg"
 
 ########## Program ##########
 
@@ -91,8 +97,8 @@ echo $filename
 echo "---" >> $filename
 echo "layout: $layout" >> $filename
 echo "title: \"$title\"" >> $filename
-echo "author: \"$author\"" >> $filename
-echo "date: `date +%F\ %H:%M:%S`" >> $filename
+#echo "author: \"$author\"" >> $filename
+echo "date: $date" >> $filename
 
 
 ### Adding tags on new lines with a dash in front (separated with comma)
