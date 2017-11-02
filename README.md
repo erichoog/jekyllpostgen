@@ -65,3 +65,29 @@ categories: DE
 ```
 
 > NOTE: for -t and -c options you can use double quotes for multiple options or ommit them for one.
+
+# Configuration
+
+This is done in the config function block at the top of the script.
+```
+function config {
+
+}
+```
+
+## Tag Format Options
+
+The default tag format is the brackets format: `tags: [tag1, tag2, tag3]`
+
+This is set with the `tag_format_is_brackets=true` option in the config function.
+
+To change this to the hyphenated format: 
+
+```
+tags:
+- tag1
+- tag2
+- tag3
+```
+
+Set the `tag_format_is_brackets` option to `false`:  `tag_format_is_brackets=false`
