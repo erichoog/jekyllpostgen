@@ -42,6 +42,8 @@ function config {
 
     # Default category (space separated values)
     default_category="EN"
+
+    tag_format_is_brackets=true
 }
 
 function show_help {
@@ -129,7 +131,14 @@ if [[ "$is_basic_mode" = false ]]; then
 
   ### Adding tags
   if [ "$tags" ]; then
-    echo "tags: [$tags]" >> $filename
+    if [[ "$tag_format_is_brackets" = true ]]; then
+        echo "tags: [$tags]" >> $filename
+    else
+    # The lack of indentation here is necessary 
+        echo "tags:
+- $tags" | sed 's/,/\
+-/g' >> $filename
+    fi
   fi
 
   ### Adding categories
