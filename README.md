@@ -92,7 +92,10 @@ tags:
 
 Set the `tag_format_is_brackets` option to `false`:  `tag_format_is_brackets=false`
 
+## Other
 
-Credit / Inspired by: 
+For info on unit testing scripts see [TESTING.md](TESTING.md)
+
+## Credit / Inspired by: 
 - [Jekyll Post Creator](http://www.marcusoft.net/2014/12/my-post-scaffolder-for-jekyll.html)
 - [jekyll-posts-generator](https://github.com/ismnoiet/jekyll-posts-generator)
