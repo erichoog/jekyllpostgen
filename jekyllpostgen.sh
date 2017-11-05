@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 #--------jekyllpostgen--------#
 #
@@ -35,7 +35,7 @@ function config {
     editor="cat"
 
     # Post directory
-    folder="_posts/"
+    folder="./"
 
     # Default date format in posts
     default_date_format_in_post='%F %T %z'
@@ -48,27 +48,27 @@ function config {
 
 function show_help {
     echo ""
-    echo "Usage: `basename $1` \"Post title\""
+    echo "Usage: $(basename "$1") \"Post title\""
     echo ""
-    echo "For interactive mode use: `basename $1` -i"
+    echo "For interactive mode use: $(basename "$1") -i"
     echo ""
     exit 0
 }
 
 function do_interactive_mode {
-    read -p "Enter Title: " title
-    read -p "Enter Href (link): " href
-    read -p "Enter Tags (comma separated): " tags
-    read -p "Enter Categories (space separated): " categories
+    read -rp "Enter Title: " title
+    read -rp "Enter Href (link): " href
+    read -rp "Enter Tags (comma separated): " tags
+    read -rp "Enter Categories (space separated): " categories
 }
 
 function set_filename {
     # convert title to jekyll post filename format 
     # echo part replaces spaces with '-', awk converts it to lowercase
     # sed keeps only lowercase letters and '-' and 0-9 digits
-    filetitle=$( echo ${1// /-} | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
+    filetitle=$( echo "${1// /-}" | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
 
-    filename="${folder}`date +%F`-$filetitle.md"
+    filename="${folder}$(date +%F)-$filetitle.md"
 }
 
 config
@@ -78,18 +78,18 @@ is_basic_mode=false
 
 # show help with -h or --help, set interactive mode with -i, no params show help, no second params basic mode
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-  show_help $0
+  show_help "$0"
 elif [[ "$1" == "-i" ]]; then
   is_interactive=true
 elif [ -z "$1" ]; then
-  show_help $0
+  show_help "$0"
 elif [[ -z "$2" && "$is_interactive" = false ]]; then
   is_basic_mode=true
 fi
 
 # if is_interactive is false an received a "-" in first param, show help
 if [[ ${1:0:1} == "-" && "$is_interactive" = false ]]; then
-    show_help $0
+    show_help "$0"
 fi
 
 
@@ -115,45 +115,46 @@ set_filename "$title"
 date=$(date +"$default_date_format_in_post")
 
 ########## Adding to file ##########
-echo "---" >> $filename
-echo "layout: ${layout}" >> $filename
-echo "title: \"${title}\"" >> $filename
+{
+    echo "---"
+    echo "layout: ${layout}"
+    echo "title: \"${title}\""
+} >> "$filename"
 
 if [[ "$is_basic_mode" = false ]]; then
 
   ### Adding href to file
   if [ "$href" ]; then
-    echo "href: $href" >> $filename
+    echo "href: $href" >> "$filename"
   fi
 
   ### Adding date to file
-  echo "date: $date" >> $filename
+  echo "date: $date" >> "$filename"
 
   ### Adding tags
   if [ "$tags" ]; then
     if [[ "$tag_format_is_brackets" = true ]]; then
-        echo "tags: [$tags]" >> $filename
+        echo "tags: [$tags]" >> "$filename"
     else
     # The lack of indentation here is necessary 
         echo "tags:
 - $tags" | sed 's/,/\
--/g' >> $filename
+-/g' >> "$filename"
     fi
   fi
 
   ### Adding categories
   if [ "$categories" ]; then
-    echo "categories: $categories" >> $filename
+    echo "categories: $categories" >> "$filename"
   else
-    echo "categories: ${default_category}" >> $filename
+    echo "categories: ${default_category}" >> "$filename"
   fi
 
 fi
 
-echo "---" >> $filename
-echo >> $filename
+echo "---" >> "$filename"
 
-echo "Your new filename is: " $filename
+echo "Your new filename is: $filename"
 
 # open in chosen editor
-${editor} $filename
+${editor} "$filename"
