@@ -153,7 +153,6 @@ if [[ "$is_basic_mode" = false ]]; then
 fi
 
 echo "---" >> "$filename"
-# echo >> "$filename"
 
 echo "Your new filename is: $filename"
 
