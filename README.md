@@ -4,12 +4,22 @@ A Jekyll Post Generator for BASH
 [![Build Status](https://travis-ci.org/erichoog/jekyllpostgen.svg?branch=master)](https://travis-ci.org/erichoog/jekyllpostgen)
 
 
+> This documentation is currently incomplete
+
+
+The **jekyllpostgen** script is meant to make it easier to create post files for [Jekyll](https://jekyllrb.com/) website projects.  
+
+It creates the post files with the proper filename format for Jekyll posts including the date and a lowercase slugified version of the title you input. 
+
+It accepts input for different parts of the post [YAML Front Matter](https://jekyllrb.com/docs/frontmatter/) and allows you to configure different aspects of how that input is handled, such as the tag formatting or the file extension (see [Configuration](#configuration) section).
+
+You can use the script in three different ways: [Basic](#basic), [Interactive](#interactive), and [Command-line](#command-line).
+
+The filename will always output in this format: `YYYY-MM-DD-your-file-title.md` and is created in the same directory where **jekyllpostgen** is run by default.
+
+Once the program has completed creating the file, it opens the file in the specified editor which is `cat`. So you can easily see what the output file looks like.  This can be configured to open any text editor you have installed like `nano` or `sublime`.
 
 # Usage
-
-The filename will always output in this format: `YYYY-MM-DD-your-file-title.md`
-
-In the config function at the top of the script, the editor is set to `cat` by default so the file contents will be opened with that program at the end.
 
 ## Basic:
 
@@ -48,7 +58,7 @@ categories: DE
 ---
 ```
 
-## Command-line Options:
+## Command-line:
 
 `./jekyllpostgen.sh "Your File Title" -t "tag1, tag with space, tag3" -l https://test.com -c DE`
 
@@ -74,6 +84,9 @@ function config {
 
 }
 ```
+
+The file extension defaults to `.md`
+
 
 ## Tag Format Options
 
