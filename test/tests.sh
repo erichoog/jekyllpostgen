@@ -17,12 +17,14 @@ test_filename_format() {
     initializeTest
 
     TITLE="Your Test SHUNIT2 Title"
-    EXPECTED_FILENAME="$(date +%F)-your-test-shunit2-title.md"
+    
+    ## Source the script to access config variables
+    . ../../jekyllpostgen.sh "$TITLE" > /dev/null
 
-    RESULT=$(../../jekyllpostgen.sh "$TITLE")
+    EXPECTED_FILENAME="$(date +%F)-your-test-shunit2-title.$file_extension"
 
     if [ ! -f "$EXPECTED_FILENAME" ]; then
-      fail "ERROR: test file not found...aborting test" 
+      fail "ERROR: Expected file $EXPECTED_FILENAME was not found." 
     fi
   )
 }

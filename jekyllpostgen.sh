@@ -4,7 +4,6 @@
 #
 # Source and tweaked from:
 #   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
-#   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
 #
 #-----------------------------#
 
@@ -28,15 +27,15 @@
 # ---
 
 function config {
-    # Post layout
+
+    folder="./"
+    file_extension="md"
+
     layout="post"
 
     # Post text editor
     editor="cat"
-
-    # Post directory
-    folder="./"
-
+  
     # Default date format in posts
     default_date_format_in_post='%F %T %z'
 
@@ -68,7 +67,7 @@ function set_filename {
     # sed keeps only lowercase letters and '-' and 0-9 digits
     filetitle=$( echo "${1// /-}" | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
 
-    filename="${folder}$(date +%F)-$filetitle.md"
+    filename="${folder}$(date +%F)-$filetitle.$file_extension"
 }
 
 config
