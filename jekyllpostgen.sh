@@ -8,7 +8,8 @@
 #
 #-----------------------------#
 
-# Simply put the script in your site directory, edit the configs to fit your setup, and run it with:
+# Simply put the script in your site directory, edit the configs to fit your
+# setup, and run it with:
 # ./jekyllpostgen.sh "post title"
 
 # What is does:
@@ -63,7 +64,7 @@ function do_interactive_mode {
 }
 
 function set_filename {
-    # convert title to jekyll post filename format 
+    # convert title to jekyll post filename format
     # echo part replaces spaces with '-', awk converts it to lowercase
     # sed keeps only lowercase letters and '-' and 0-9 digits
     filetitle=$( echo "${1// /-}" | awk '{print tolower($0)}'| sed 's/[^a-z0-9\-]*//g')
@@ -76,7 +77,8 @@ config
 is_interactive=false
 is_basic_mode=false
 
-# show help with -h or --help, set interactive mode with -i, no params show help, no second params basic mode
+# show help with -h or --help, set interactive mode with -i,
+# no params show help, no second params basic mode
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
   show_help "$0"
 elif [[ "$1" == "-i" ]]; then
@@ -136,7 +138,7 @@ if [[ "$is_basic_mode" = false ]]; then
     if [[ "$tag_format_is_brackets" = true ]]; then
         echo "tags: [$tags]" >> "$filename"
     else
-    # The lack of indentation here is necessary 
+    # The lack of indentation here is necessary
         echo "tags:
 - $tags" | sed 's/,/\
 -/g' >> "$filename"
