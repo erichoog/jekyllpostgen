@@ -29,22 +29,27 @@
 # ---
 
 function config {
-    # Post layout
-    layout="post"
 
-    # Post text editor
-    editor="cat"
+    if [ -r $HOME/.jekyllpostgenrc ]; then
+      source $HOME/.jekyllpostgenrc
+    else
+      # Post layout
+      layout="post"
 
-    # Post directory
-    folder="./"
+      # Post text editor
+      editor="cat"
 
-    # Default date format in posts
-    default_date_format_in_post='%F %T %z'
+      # Post directory
+      folder="./"
 
-    # Default category (space separated values)
-    default_category="EN"
+      # Default date format in posts
+      default_date_format_in_post='%F %T %z'
 
-    tag_format_is_brackets=true
+      # Default category (space separated values)
+      default_category="EN"
+
+      tag_format_is_brackets=true
+    fi
 }
 
 function show_help {
