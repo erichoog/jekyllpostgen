@@ -1,0 +1,18 @@
+# Rename this file to .jekyllpostgenrc and place it in your $HOME directory
+
+# Post layout
+layout="post"
+
+# Post text editor
+editor="cat"
+
+# Post directory
+folder="./"
+
+# Default date format in posts
+default_date_format_in_post='%F %T %z'
+
+# Default category (space separated values)
+default_category="EN"
+
+tag_format_is_brackets=true
