@@ -78,6 +78,18 @@ categories: DE
 
 # Configuration
 
+There are two methods of configuration availalbe.
+1. Creating a `.jekyllpostgenrc` file in your home directory.
+2. Modifying the `config` function at the beginning of the script file
+
+## Using the .jekyllpostgenrc file
+
+To use the `.jekyllpostgenrc` config file just copy the `jekyllpostgenrc.example` file to your home directory and rename it to `.jekyllpostgenrc`.
+
+You can do this from the root of the repository using `cp jekyllpostgenrc.example ~/.jekyllpostgenrc`.
+
+## Using the script config function
+
 This is done in the config function block at the top of the script.
 ```
 function config {
