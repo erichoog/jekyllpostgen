@@ -4,7 +4,6 @@
 #
 # Source and tweaked from:
 #   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
-#   https://gist.github.com/marcusoftnet/2eec785d3477beacf709#file-scaffold_post
 #
 #-----------------------------#
 
@@ -29,26 +28,29 @@
 # ---
 
 function config {
+    # Post layout
+    layout="post"
 
+    # Post text editor
+    editor="cat"
+
+    # Post directory
+    folder="./"
+
+    # Default date format in posts
+    default_date_format_in_post='%F %T %z'
+
+    # Default category (space separated values)
+    default_category="EN"
+
+    tag_format_is_brackets=true
+}
+
+function start_config {
     if [ -r $HOME/.jekyllpostgenrc ]; then
       source $HOME/.jekyllpostgenrc
     else
-      # Post layout
-      layout="post"
-
-      # Post text editor
-      editor="cat"
-
-      # Post directory
-      folder="./"
-
-      # Default date format in posts
-      default_date_format_in_post='%F %T %z'
-
-      # Default category (space separated values)
-      default_category="EN"
-
-      tag_format_is_brackets=true
+      config
     fi
 }
 
@@ -77,7 +79,7 @@ function set_filename {
     filename="${folder}$(date +%F)-$filetitle.md"
 }
 
-config
+start_config
 
 is_interactive=false
 is_basic_mode=false
